@@ -13,6 +13,14 @@ func FileExists(path string) bool {
     }
 }
 
+func OpenFile(path string) (*os.File, error) {
+    file, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644)
+    if err != nil {
+        return nil, err
+    }
+    return file, nil
+}
+
 func CreateFile(path string) error {
     file, err := os.Create(path)
     if err != nil {
