@@ -1,18 +1,13 @@
 package task
+
 import (
-	"time"
-	"timeping/config"
+	"container/list"
+	t  "timeping/utype"
 )
-type TaskNode struct {
-	taskId int
-	task interface{}
-	isuse bool
-	node *TaskNode
-	next *TaskNode
-	last *TaskNode
-	time time.Time
-}
-func InitialTaskPool() []TaskNode {
-	TaskPool := make([]TaskNode, config.TaskPoolSize)
-	return TaskPool
+
+func InitialTaskPool(){
+	t.Engine_kernal.TaskPool=list.New();
+	TaskPoolNode := make([]t.TaskNode, t.Conf.TaskPoolSize)
+	t.Engine_kernal.TaskPool.PushBack(TaskPoolNode)
+	creatUnusedTask(TaskPoolNode);
 }

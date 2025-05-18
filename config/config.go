@@ -1,7 +1,24 @@
 package config
 
 import (
+	"fmt"
+	"timeping/ostools"
+	"timeping/utype"
+
+	"github.com/spf13/viper"
 )
-var Timeinterval int = 1  //时间轮的间隔
-var TaskPoolSize int = 100  //任务池的大小
-var TimeWheelSize int = 60 //时间轮的大小
+
+func Get_setting() error {
+	path:="./timecnf.yaml"
+	if !ostools.FileExists(path){
+		if err:=init_config(path);err!=nil{
+			fmt.Println(err)
+			return err
+		}
+	}
+	utype.Conf.TaskPoolSize=uint16(viper.GetInt("TaskPoolSize"))
+	utype.Conf.TimeWheelSize=uint16(viper.GetInt("TimeWheelSize"))
+	utype.Conf.Timeinterval=uint16(viper.GetInt("Timeinterval"))
+	return nil
+}
+
