@@ -14,13 +14,14 @@ import (
 	
 func main() {
 	TaskPool := make([]TaskNode, config.TaskPoolSize)
-	currentTask:=&TaskPool[0]
+	currentTask:=0
 	TimePing := make([]TaskNode, config.TimeWheelSize)
+	newTask:= make(chan TaskNode,1)
 	go func(){
 		currentIndex :=0
 		ticker:=time.NewTicker(time.Second*time.Duration(config.Timeinterval))
 		defer ticker.Stop()
-		for currentIndex<config.TimeWheelSize{
+		for {
 			select{
 			case <-ticker.C:
 				if &TimePing[currentIndex].time<=time.Now()+time.Duration(config.TimeInterval)/2 && &TimePing[currentIndex].time>=time.Now()-time.Duration(config.TimeInterval)/2{
@@ -29,7 +30,10 @@ func main() {
 				}
 				currentIndex++
 				currentIndex=currentIndex%config.TimeWheelSize
-				
+			case newTask:=<-newTask:
+				AddTask(TimePing,currentTask,newTask)
+				currentTask++
+				//待处理
 			}
 		}
 	}
