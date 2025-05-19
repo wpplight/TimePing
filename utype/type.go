@@ -13,15 +13,24 @@ type Node struct{
 }
 type TaskNode struct {
 	taskId uint16
-	Used bool
+	Used bool 
 	Tnode Node
 };
 var Engine_kernal struct{
 	TaskPool *list.List
 	UnuseQueue *list.List
 }
-
+type TimeWheelNode struct{
+	node *TaskNode
+}
 
 var(
 	Conf cnf
+)
+type taskInfo struct{
+	TaskId uint16
+	TaskPos uint16
+}
+var(
+	TaskChan = make(chan taskInfo, 1)
 )
