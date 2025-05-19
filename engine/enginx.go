@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -27,6 +26,7 @@ func Initial_engine() error {
 }
 
 func Run(){
+	tlog.Common("start successfully 启动成功","engine")
 	<- run_chan
-	fmt.Println("TimePing Exit")
+	tlog.Common("Exit 已停止")
 }
