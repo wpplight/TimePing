@@ -22,6 +22,7 @@ func init_config(path string) error {
 		viper.Set("TaskPoolSize", 100)
 		viper.Set("TimeWheelSize", 60)
 		viper.Set("Timeinterval", 100)
+		viper.Set("Port", 9768)
 		err = viper.WriteConfigAs(path)
 		if(err!=nil){
 			return fmt.Errorf("setting creat default! Check your root 创建setting文件错误")

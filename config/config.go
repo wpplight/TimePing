@@ -20,6 +20,7 @@ func Get_setting() error {
 	utype.Conf.TaskPoolSize=uint16(viper.GetInt("TaskPoolSize"))
 	utype.Conf.TimeWheelSize=uint16(viper.GetInt("TimeWheelSize"))
 	utype.Conf.Timeinterval=uint16(viper.GetInt("Timeinterval"))
+	utype.Conf.Port=uint16(viper.GetInt("Port"))
 	tlog.Common("Setting is OK 配置读取成功","Setting")
 	return nil
 }
