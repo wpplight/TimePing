@@ -1,15 +1,15 @@
 package task
 
 import (
-	"container/list"
-	"time"
-	t "timeping/utype"
+	"timeping/tlist"
 )
 
-func creatUnusedTask(TaskPoolNode []t.TaskNode )  {
-	t.Engine_kernal.UnuseQueue=list.New()
+//通过创建好的任务池，创建一个未使用的任务队列
+func creatUnusedTask(TaskPoolNode []TaskNode) *tlist.Tlist {
+	UnuseQueue:=tlist.New()
 	for i:=0;i<len(TaskPoolNode);i++{
 		TaskPoolNode[i].Used = false
-		t.Engine_kernal.Unus  eQueue.PushBack(&TaskPoolNode[i].Tnode)
+		UnuseQueue.PushBack(&TaskPoolNode[i].Tnode)
 	}
+	return UnuseQueue
 }

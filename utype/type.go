@@ -1,4 +1,5 @@
 package utype
+
 import "container/list"
 
 type cnf struct{
@@ -8,29 +9,19 @@ type cnf struct{
 	Port  uint16//使用端口
 };
 type Node struct{
-	next *Node
-	last *Node
+	Next *Node
+	Last *Node
 }
-type TaskNode struct {
-	taskId uint16
-	Used bool 
-	Tnode Node
-};
-var Engine_kernal struct{
-	TaskPool *list.List
-	UnuseQueue *list.List
+type Tlist struct{
+	len int
+	head *Node
+	tail *Node
 }
-type TimeWheelNode struct{
-	node *TaskNode
-}
-
 var(
 	Conf cnf
+	TaskChan = make(chan taskInfo, 1)
 )
 type taskInfo struct{
 	TaskId uint16
 	TaskPos uint16
 }
-var(
-	TaskChan = make(chan taskInfo, 1)
-)

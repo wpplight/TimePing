@@ -2,10 +2,15 @@ package tlog
 
 import (
 	"fmt"
+	"os"
 	"timeping/ostools"
+
 	log "github.com/sirupsen/logrus"
 )
 
+var(
+	logfile *os.File
+)
 
 func Init_log() error{
 	if !ostools.FileExists("./error.log"){
@@ -16,14 +21,17 @@ func Init_log() error{
 	}
 	return nil
 }
+func Exit_log(){
+	logfile.Close()
+}
 func Err_in(e string){
-	f,err:=ostools.OpenFile("./error.log")
+	var err error
+	logfile,err=ostools.OpenFile("./error.log")
 	if err!=nil{
 		fmt.Println("error.log 请检查权限")
 		return
 	}
-	defer f.Close()
-	log.SetOutput(f)
+	log.SetOutput(logfile)
 	log.SetLevel(log.ErrorLevel)
 	log.SetFormatter(&log.TextFormatter{
 		FullTimestamp: true,
