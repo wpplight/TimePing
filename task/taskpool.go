@@ -10,8 +10,7 @@ import (
 func InitialTaskPool() {
 	global.Taskpool.PushBack(make([]u.TaskNode,global.Conf.TaskPoolSize))
 	creatUnusedTask(global.Taskpool.Front().Value.([]u.TaskNode))
-	l:=u.TaskNode{}
-	global.Trans.TCB =unsafe.Offsetof(l.Tnode)
+	global.Trans.TCB =unsafe.Offsetof(u.TaskNode{}.Tnode)
 }
 func creatUnusedTask(TaskPoolNode []u.TaskNode) {
 	for i:=0;i<len(TaskPoolNode);i++{
