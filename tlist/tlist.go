@@ -48,7 +48,7 @@ func (t *Tlist) MoveFront2Back(n *Tlist) {
 	t.root.Last = n.root.Next //更新尾部节点
 	n.root.Next =n.root.Next.Next	//更换n头部节点
 	n.root.Next.Last =&n.root	//更新n头部节点的last
-	t.root.Last.Next =&n.root	//更新t尾部节点的next
+	t.root.Last.Next =&n.root	//更新插入节点的next
 	n.len++
 }
 

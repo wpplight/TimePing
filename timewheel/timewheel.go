@@ -4,11 +4,12 @@ import (
 	"time"
 	"timeping/global"
 	"timeping/utype"
+	"timeping/tlist"
 )
 
-var Tw []utype.TimeWheelNode
+var Tw []*tlist.Tlist
 func InitialTimeWheel() {
-	Tw=make([]utype.TimeWheelNode,utype.Conf.TimeWheelSize)
+	Tw=make([]*tlist.Tlist,utype.Conf.TimeWheelSize)
 }
 
 
