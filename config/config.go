@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"timeping/ostools"
 	"timeping/tlog"
-	"timeping/utype"
-
+	"timeping/global"
 	"github.com/spf13/viper"
 )
 
@@ -17,10 +16,10 @@ func Get_setting() error {
 			return err
 		}
 	}
-	utype.Conf.TaskPoolSize=uint16(viper.GetInt("TaskPoolSize"))
-	utype.Conf.TimeWheelSize=uint16(viper.GetInt("TimeWheelSize"))
-	utype.Conf.Timeinterval=uint16(viper.GetInt("Timeinterval"))
-	utype.Conf.Port=uint16(viper.GetInt("Port"))
+	global.Conf.TaskPoolSize=uint16(viper.GetInt("TaskPoolSize"))
+	global.Conf.TimeWheelSize=uint16(viper.GetInt("TimeWheelSize"))
+	global.Conf.Timeinterval=uint16(viper.GetInt("Timeinterval"))
+	global.Conf.Port=uint16(viper.GetInt("Port"))
 	tlog.Common("Setting is OK 配置读取成功","Setting")
 	return nil
 }

@@ -10,18 +10,14 @@ type Node struct{
 	Next *Node
 	Last *Node
 }
-type Tlist struct{
-	len int
-	head *Node
-	tail *Node
-}
+
 type TimeWheelNode struct {
 	Tnode *Node
 }
 
 type TaskNode struct {
-	taskId uint16
 	Used bool 
+	taskId uint16
 	Tnode Node
 };
 
