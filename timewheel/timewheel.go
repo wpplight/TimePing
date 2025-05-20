@@ -9,7 +9,7 @@ import (
 
 var Tw []*tlist.Tlist
 func InitialTimeWheel() {
-	Tw=make([]*tlist.Tlist,utype.Conf.TimeWheelSize)
+	Tw=make([]*tlist.Tlist,global.Conf.TimeWheelSize)
 }
 
 

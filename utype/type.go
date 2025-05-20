@@ -1,6 +1,6 @@
 package utype
 
-type cnf struct{
+type Cnf struct{
 	Timeinterval uint16//时间轮的间隔
 	TaskPoolSize uint16 //任务池的大小
 	TimeWheelSize uint16//时间轮的大小
@@ -18,13 +18,14 @@ type Tlist struct{
 type TimeWheelNode struct {
 	Tnode *Node
 }
-var(
-	Conf cnf
-	TaskChan = make(chan taskInfo, 1)
-)
 
+type TaskNode struct {
+	taskId uint16
+	Used bool 
+	Tnode Node
+};
 
-type taskInfo struct{
+type TaskInfo struct{
 	TaskId uint16
 	TaskPos uint16
 }

@@ -17,7 +17,8 @@ func (t *Tlist) init() *Tlist {
 //创建侵入式链表,会返回一个该链表的指针
 func New() *Tlist{
 	return new(Tlist).init()
-}                  
+}        
+
 //返回该链表长度
 func (t *Tlist) Length() int {                     
 	return t.len
@@ -49,25 +50,28 @@ func (t *Tlist) MoveFront2Back(n *Tlist) {
 	n.root.Next =n.root.Next.Next	//更换n头部节点
 	n.root.Next.Last =&n.root	//更新n头部节点的last
 	t.root.Last.Next =&n.root	//更新插入节点的next
-	n.len++
+	t.len++
 }
 
-
+//返回链表头部节点,并删除
 func (t *Tlist) PopFront() *utype.Node { 
 	if t.len == 0 {
 		return nil
 	}
-	n := t.root
-	t.root = n.Next
+	n := t.root.Next
+	t.root.Next = n.Next
+	t.root.Next.Last =&t.root
 	t.len--
 	return n
 }
+//返回链表尾部节点,并删除
 func (t *Tlist) PopBack() *utype.Node { 
 	if t.len == 0 {
 		return nil
 	}
-	n := t.tail
-	t.tail = n.Last
+	n := t.root.Last
+	t.root.Last = n.Last
+	t.root.Last.Next =&t.root
 	t.len--
 	return n
 }
