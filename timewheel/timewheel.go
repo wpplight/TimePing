@@ -16,7 +16,7 @@ func InitialTimeWheel() {
 func AddTask() {
 	for{
 		select{
-			case task:=<-utype.TaskChan:
+			case task:=<-global.TaskChan:
 				//从任务队列中取出任务
 				if(Tw[task.TaskPos].Tnode==nil){
 					Tw[task.TaskPos].Tnode=global.UnuseQueue.PopFront()

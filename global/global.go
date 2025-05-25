@@ -9,7 +9,6 @@ import (
 
 var Trans struct{
 	TCB uintptr
-	
 }
 
 var(
