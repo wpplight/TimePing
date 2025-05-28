@@ -5,6 +5,7 @@ import (
 	"timeping/utype"
 	"fmt"
 )
+//头节点
 type Tlist struct{
 	len int
 	root *utype.Node //哨兵节点
@@ -44,8 +45,9 @@ func (t *Tlist) PushBack(n *utype.Node) {
 	t.root.Last.Next = n	//尾部节点的next指向新插入的节点
 	t.root.Last = n		//更新尾部节点
 	t.len++
-}
+}   
 
+//输入节点指针，就会被推入头部
 func (t *Tlist) PushFront(n *utype.Node) { 
 	n.Last =t.root	//新插入的节点的last指向当前链表头部
 	n.Next = t.root.Next	//新插入的节点的next指向当前链表头部节点
@@ -88,4 +90,12 @@ func (t *Tlist) PopBack() *utype.Node {
 	t.root.Last.Next=t.root
 	t.len--
 	return n
+}
+
+func (t *Tlist) GetHeadNode() *utype.Node{
+	return t.root.Next
+}
+
+func (t *Tlist) GetTailNode() *utype.Node{
+	return t.root.Last
 }
