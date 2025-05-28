@@ -22,4 +22,14 @@ func NewNet() (*NetCore,error){
 	n.listen=listen
 	return n,nil
 }
+func(n *NetCore) Run(){
+	for{
+		conn,err:=n.listen.Accept()
+		if err!=nil{
+			tlog.Common("Accept error","netcore")
+			continue
+		}
+		go handleConn(conn)
+	}
+}
 
