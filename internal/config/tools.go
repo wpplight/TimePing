@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
-	"timeping/tlog"
+	"timeping/internal/tlog"
 	"github.com/spf13/viper"
 )
 

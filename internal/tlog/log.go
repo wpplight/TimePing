@@ -3,8 +3,7 @@ package tlog
 import (
 	"fmt"
 	"os"
-	"timeping/ostools"
-
+	"timeping/pkg/ostools"
 	log "github.com/sirupsen/logrus"
 )
 

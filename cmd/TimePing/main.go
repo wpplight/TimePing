@@ -1,8 +1,6 @@
 package main
 
-import (
-	"timeping/engine"
-)
+import "timeping/internal/engine"
 	
 func main() {
 	if err:=engine.Initial_engine();err!=nil{

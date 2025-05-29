@@ -4,9 +4,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"timeping/config"
-	"timeping/task"
-	"timeping/tlog"
+	"timeping/internal/config"
+	"timeping/internal/task"
+	"timeping/internal/tlog"
 )
 
 var (
@@ -17,7 +17,7 @@ func Initial_engine() error {
 	if err := tlog.Init_log(); err != nil {
 		return err
 	}
-	if err := config.Get_setting(); err != nil {
+	if err := config.Load_setting(); err != nil {
 		return err
 	}
 	task.InitialTaskPool()

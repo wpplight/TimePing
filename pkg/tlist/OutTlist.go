@@ -2,17 +2,16 @@ package tlist
 
 import (
 	"fmt"
-	"timeping/tlog"
-	"timeping/utype"
+	"timeping/internal/tlog"
 )
 
 type Tlist struct {
 	origin *Tlist      //归属队列
-	root   *utype.Node //哨兵节点
+	root   *Node //哨兵节点
 }
 
 func (t *Tlist) init() *Tlist {
-	t.root = new(utype.Node)
+	t.root = new(Node)
 	t.root.Last = t.root //指向队尾
 	t.root.Next = t.root //指向队首
 	t.origin = nil
@@ -43,14 +42,14 @@ func New() *Tlist {
 }
 
 // 输入节点指针，就会被推入尾部
-func (t *Tlist) PushBack(n *utype.Node) {
+func (t *Tlist) PushBack(n *Node) {
 	n.Last = t.root.Last //插入的节点的next指向当前链表尾部
 	n.Next = t.root      //新插入的节点的last指向nil
 	t.root.Last.Next = n //尾部节点的next指向新插入的节点
 	t.root.Last = n      //更新尾部节点
 }
 
-func (t *Tlist) PushFront(n *utype.Node) {
+func (t *Tlist) PushFront(n *Node) {
 	n.Last = t.root      //新插入的节点的last指向当前链表头部
 	n.Next = t.root.Next //新插入的节点的next指向当前链表头部节点
 	t.root.Next.Last = n //更新头部节点的last
@@ -66,7 +65,7 @@ func (t *Tlist) MoveFront2Back(n *Tlist) {
 }
 
 // 返回链表头部节点,并删除
-func (t *Tlist) PopFront() *utype.Node {
+func (t *Tlist) PopFront() *Node {
 	n := t.root.Next
 	t.root.Next = n.Next
 	t.root.Next.Last = t.root
@@ -74,7 +73,7 @@ func (t *Tlist) PopFront() *utype.Node {
 }
 
 // 返回链表尾部节点,并删除
-func (t *Tlist) PopBack() *utype.Node {
+func (t *Tlist) PopBack() *Node {
 	n := t.root.Last
 	t.root.Last = n.Last
 	t.root.Last.Next = t.root

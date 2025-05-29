@@ -4,20 +4,20 @@ import (
 	"log"
 	"time"
 	"timeping/global"
-	"timeping/tlist"
-	"timeping/task"
+	"timeping/internal/config"
+	"timeping/pkg/tlist"
 )
 
 var Tw []*tlist.Tlist
 func InitialTimeWheel() {
-	Tw=make([]*tlist.Tlist,global.Conf.TimeWheelSize)
+	Tw=make([]*tlist.Tlist,config.Conf.TimeWheelSize)
 }
 
 
 func ModifyTask() {
 	for{
 		select{
-			case gettask:=<-global.AddTaskChan:
+			case gettask:=<-AddTaskChan:
 				//从任务队列中取出任务
 				var err error
 				if(Tw[gettask.TaskPos]==nil){
@@ -32,7 +32,7 @@ func ModifyTask() {
 				}
 			case gettask:=<-global.DeleteTaskChan:
 				//从任务队列中取出任务
-				temp:=Tw[gettask.TaskPos].GetHeadNode()
+				temp:=Tw[gettask.TaskPos].PopFront()
 				for temp!= nil {
 					if(task.GetTaskId(temp)==gettask.TaskId){
 						
@@ -43,7 +43,7 @@ func ModifyTask() {
 	}
 }
 func TimeTicker() {
-	ticker := time.NewTicker(time.Duration(global.Conf.Timeinterval) * time.Second)
+	ticker := time.NewTicker(time.Duration(config.Conf.Timeinterval) * time.Second)
 	defer ticker.Stop()
 	var index uint16=0;
 	for {
@@ -53,7 +53,7 @@ func TimeTicker() {
 			//判断是否是当前轮的节点，如果是则运行,待写入
 
 			index++;
-			if(index==global.Conf.TimeWheelSize){
+			if(index==config.Conf.TimeWheelSize){
 				index=0;
 			}
 		}
