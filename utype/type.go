@@ -15,10 +15,11 @@ type TimeWheelNode struct {
 }
 
 type TaskNode struct {
-	Used bool 
+
+	Used bool
 	TaskId uint16
 	Tnode Node
-};
+}
 
 type TaskInfo struct{
 	TaskId uint16

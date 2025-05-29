@@ -8,13 +8,16 @@ import (
 )
 
 var Trans struct{
-	TCB uintptr
+	TaskId uintptr
+	Used uintptr
 }
 
 var(
 	Taskpool = list.New()
 	UnuseQueue =tlist.New()
 	Conf u.Cnf
-	TaskChan = make(chan u.TaskInfo, 1)
+	AddTaskChan = make(chan u.TaskInfo, 1)
+	DeleteTaskChan = make(chan u.TaskInfo, 1)
+	UpdateTaskChan = make(chan u.TaskInfo, 1)
 )
 
