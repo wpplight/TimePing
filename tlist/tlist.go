@@ -23,11 +23,13 @@ func (t *Tlist) init() *Tlist {
 func Build(n *Tlist) (*Tlist, error) {
 	if n == nil {
 		tlog.Common("Tlist build error nil", "tlist")
+		tlog.Err_in("Tlist build, pointer is nil","tlist")
 		return nil, fmt.Errorf("Tlist init error")
 	}
 	k := new(Tlist)
 	if n.root.Next == n.root {
 		tlog.Common("Tlist build error few element", "tlist")
+		tlog.Err_in("Tlist build,no enough node in tlist","tlist")
 		return nil, fmt.Errorf("Tlist init error")
 	}
 	k.root = n.PopFront()
