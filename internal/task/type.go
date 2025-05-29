@@ -14,7 +14,7 @@ type TaskNode struct {
 
 var(
 	taskpool =list.New()
-	unuseQueue =tlist.New()
+	UnuseQueue =tlist.New()
 
 	trans struct{
 	TaskId uintptr

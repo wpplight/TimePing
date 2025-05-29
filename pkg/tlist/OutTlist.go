@@ -36,6 +36,20 @@ func Build(n *Tlist) (*Tlist, error) {
 	return k, nil
 }
 
+//当且仅当正确的tlist中还有元素时候会返回nil
+func (n *Tlist)IsEmpty() error{
+	if n==nil{
+		tlog.Common("空指针被使用in empty check","tlist")
+		tlog.Err_in("空指针被使用in empty check","tlist")
+		return fmt.Errorf("空指针被使用in empty check")
+	}
+	if n.root.Next==n.root{
+		return fmt.Errorf("empty")
+	}
+	return nil
+
+}
+
 // 创建侵入式链表,会返回一个该链表的指针
 func New() *Tlist {
 	return new(Tlist).init()

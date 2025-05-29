@@ -3,9 +3,8 @@ package netcore
 import (
 	"net"
 	"strconv"
-	"timeping/global"
-	"timeping/netcore/netsend"
-	"timeping/tlog"
+	"timeping/internal/config"
+	"timeping/internal/tlog"
 )
 
 type NetCore struct{
@@ -13,7 +12,7 @@ type NetCore struct{
 }
 
 func NewNet() (*NetCore,error){
-	listen,err:=net.Listen("tcp","127.0.0.1:"+strconv.Itoa(int(global.Conf.Port)))
+	listen,err:=net.Listen("tcp","127.0.0.1:"+strconv.Itoa(int(config.Conf.Port)))
 	if err!=nil{
 		tlog.Common("Listen error","netcore")
 		return nil,err
@@ -29,7 +28,7 @@ func(n *NetCore) Run(){
 			tlog.Common("Accept error","netcore")
 			continue
 		}
-		go handleConn(conn)
+
 	}
 }
 

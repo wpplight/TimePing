@@ -3,14 +3,15 @@ package timewheel
 import (
 	"log"
 	"time"
-	"timeping/global"
 	"timeping/internal/config"
+	"timeping/internal/task"
 	"timeping/pkg/tlist"
 )
 
 var Tw []*tlist.Tlist
 func InitialTimeWheel() {
 	Tw=make([]*tlist.Tlist,config.Conf.TimeWheelSize)
+
 }
 
 
@@ -20,17 +21,15 @@ func ModifyTask() {
 			case gettask:=<-AddTaskChan:
 				//从任务队列中取出任务
 				var err error
-				if(Tw[gettask.TaskPos]==nil){
-					
-					Tw[gettask.TaskPos], err = tlist.Build(global.UnuseQueue.PopFront())
-					
+				if(Tw[aa]==nil){
+					Tw[gettask.TaskPos], err = tlist.Build(task.UnuseQueue)
 				}else {
-					Tw[gettask.TaskPos].PushFront(global.UnuseQueue.PopBack())
+					Tw[gettask.TaskPos].PushFront(task.UnuseQueue.PopBack())
 				}
 				if err != nil {
 					log.Fatal(err)
 				}
-			case gettask:=<-global.DeleteTaskChan:
+			case gettask:=<-DeleteTaskChan:
 				//从任务队列中取出任务
 				temp:=Tw[gettask.TaskPos].PopFront()
 				for temp!= nil {
