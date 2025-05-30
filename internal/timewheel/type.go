@@ -6,3 +6,8 @@ var(
 	DeleteTaskChan = make(chan tlist.Node, 1)
 	UpdateTaskChan = make(chan tlist.Node, 1)
 )
+
+type Twhell struct{
+	T *tlist.Tlist
+	N tlist.Node
+}

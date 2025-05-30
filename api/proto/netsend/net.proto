@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package netsend;
-option go_package = "./netsend";
+option go_package = "./";
 service MyService {
   // 双向流：客户端和服务端都可以持续发送消息
   rpc TaskStream (stream TaskMessage) returns (stream TaskNotification);
@@ -21,4 +21,4 @@ message DeleteTaskRequest {
 message TaskNotification {
   string message = 1; // 任务完成通知或其他信息
 }
-//protoc -I=netcore --go_out=netcore --go-grpc_out=netcore netcore/*.proto
+//protoc -I=api --go_out=netcore --go-grpc_out=netcore netcore/*.proto

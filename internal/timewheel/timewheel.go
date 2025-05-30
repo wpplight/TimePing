@@ -5,13 +5,23 @@ import (
 	"time"
 	"timeping/internal/config"
 	"timeping/internal/task"
+	"timeping/internal/tlog"
 	"timeping/pkg/tlist"
 )
 
 var Tw []*tlist.Tlist
 func InitialTimeWheel() {
 	Tw=make([]*tlist.Tlist,config.Conf.TimeWheelSize)
-
+	for i:=0;i<int(config.Conf.TimeWheelSize);i++{
+		for j:=0;j<config.Conf.Timelevel;j++{		
+			if t,err:=tlist.Build(&new(Twhell).N);err!=nil{
+				Tw[i]=t
+			}else{
+				tlog.Common("init fail","timewheel")
+				tlog.Err_in("init fail","timewheel")
+			}
+		}
+	}
 }
 
 
@@ -22,7 +32,8 @@ func ModifyTask() {
 				//从任务队列中取出任务
 				var err error
 				if(Tw[aa]==nil){
-					Tw[gettask.TaskPos], err = tlist.Build(task.UnuseQueue)
+					t:=new(Twhell)
+					Tw[gettask.TaskPos], err = tlist.Build(&t.N)
 				}else {
 					Tw[gettask.TaskPos].PushFront(task.UnuseQueue.PopBack())
 				}

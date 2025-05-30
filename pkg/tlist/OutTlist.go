@@ -6,44 +6,38 @@ import (
 )
 
 type Tlist struct {
-	origin *Tlist      //归属队列
-	root   *Node //哨兵节点
+	root   *Node  //哨兵节点
 }
 
 func (t *Tlist) init() *Tlist {
 	t.root = new(Node)
 	t.root.Last = t.root //指向队尾
 	t.root.Next = t.root //指向队首
-	t.origin = nil
 	return t
 }
 
 // 使用已有内存块创建一个链表，并返回一个该链表的指针
-func Build(n *Tlist) (*Tlist, error) {
+func Build(n *Node) (*Tlist, error) {
 	if n == nil {
 		tlog.Common("Tlist build error nil", "tlist")
-		tlog.Err_in("Tlist build, pointer is nil","tlist")
+		tlog.Err_in("Tlist build, pointer is nil", "tlist")
 		return nil, fmt.Errorf("Tlist init error")
 	}
 	k := new(Tlist)
-	if n.root.Next == n.root {
-		tlog.Common("Tlist build error few element", "tlist")
-		tlog.Err_in("Tlist build,no enough node in tlist","tlist")
-		return nil, fmt.Errorf("Tlist init error")
-	}
-	k.root = n.PopFront()
-	k.origin = n
+	
+	k.root = n
+
 	return k, nil
 }
 
-//当且仅当正确的tlist中还有元素时候会返回nil
-func (n *Tlist)IsEmpty() error{
-	if n==nil{
-		tlog.Common("空指针被使用in empty check","tlist")
-		tlog.Err_in("空指针被使用in empty check","tlist")
+// 当且仅当正确的tlist中还有元素时候会返回nil
+func (n *Tlist) IsEmpty() error {
+	if n == nil {
+		tlog.Common("空指针被使用in empty check", "tlist")
+		tlog.Err_in("空指针被使用in empty check", "tlist")
 		return fmt.Errorf("空指针被使用in empty check")
 	}
-	if n.root.Next==n.root{
+	if n.root.Next == n.root {
 		return fmt.Errorf("empty")
 	}
 	return nil
@@ -92,4 +86,16 @@ func (t *Tlist) PopBack() *Node {
 	t.root.Last = n.Last
 	t.root.Last.Next = t.root
 	return n
+}
+
+// 删除空tlist，build方式创建会返回原队列，new方式会直接释放
+func (t *Tlist) Delete(l *Tlist) error {
+	if t.root.Next != t.root {
+		tlog.Common("delete fail not empty", "tlist")
+		tlog.Err_in("delete fail not empty", "tlist")
+		return fmt.Errorf("not empty")
+	}
+	l.PushBack(t.root)
+	t.root=nil
+	return nil
 }
