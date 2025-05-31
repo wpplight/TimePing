@@ -100,3 +100,16 @@ func (t *Tlist) Delete(l *Tlist) error {
 	t.root=nil
 	return nil
 }
+
+func (t *Tlist) Front() *Node {
+	if t.root.Next == t.root {
+		return nil
+	}
+	return t.root.Next
+}
+func (t *Tlist) Back() *Node {
+	if t.root.Last == t.root {
+		return nil
+	}
+	return t.root.Last
+}
