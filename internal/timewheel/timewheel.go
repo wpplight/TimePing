@@ -94,21 +94,46 @@ func ModifyTask() {
 		}
 	}
 }
-
+func ExecuteTask(id int) {
+}
 
 func TimeTicker() {
 	ticker := time.NewTicker(time.Duration(config.Conf.Timeinterval) * time.Second)
 	defer ticker.Stop()
 	var index uint16=0;
+	wheel :=0 //轮次
 	for {
 		<-ticker.C
 
-			//判断是否是当前轮的节点，如果是则运行,待写入
-
-			index++;
-			if(index==config.Conf.TimeWheelSize){
-				index=0;
+			//判断是否是当前轮的节点，如果是则运行
+		if Tw[index] != nil && Tw[index].Front() != nil {
+			for e := Tw[index].Front(); e != nil; e = e.Next() {
+				if taskElem, ok := e.Value.(*Tasks); ok {
+					//如果是当前轮次的任务
+					if taskElem.timeWheels == wheel {
+						//执行该轮次的任务
+						for e2 := taskElem.tl.Front(); e2 != nil; e2 = e2.Next {
+							ExecuteTask(*GetIdPtr(e2))
+							//将该节点放入未使用队列
+							UnuseQueue.PushBack(e2)
+						}
+						//清空该轮次的任务
+						if taskElem.tl.IsEmpty()==nil {
+							Tw[index].Remove(e)
+						}
+					}
+				}
 			}
+			
+		}
+			
+			
+		index++;
+		if(index==config.Conf.TimeWheelSize){
+			index=0;
+			wheel++;
+			//wheel重置功能待写入
+		}
 		
 	}
 }
