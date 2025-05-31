@@ -1,10 +1,11 @@
 package tlog
-import "fmt"
-
+import "log"
+//输入报错内容和多个标签
 func Common(message string, tag ...string){
-	fmt.Print("[TimePing]")
+	s:=""
+
 	for _,v:=range tag{
-		fmt.Print("[",v,"]  ")
+		s+="["+v+"]  "
 	}
-	fmt.Println(message)
+	log.Println(s+message)
 }

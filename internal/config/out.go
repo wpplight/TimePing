@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"timeping/internal/tlog"
 	"timeping/pkg/ostools"
 	"github.com/spf13/viper"
@@ -11,7 +10,6 @@ func Load_setting() error {
 	path:="./timecnf.yaml"
 	if !ostools.FileExists(path){
 		if err:=init_config(path);err!=nil{
-			fmt.Println(err)
 			return err
 		}
 	}

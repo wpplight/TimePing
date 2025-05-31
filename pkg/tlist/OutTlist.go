@@ -35,7 +35,7 @@ func (n *Tlist) IsEmpty() error {
 	if n == nil {
 		tlog.Common("空指针被使用in empty check", "tlist")
 		tlog.Err_in("空指针被使用in empty check", "tlist")
-		return fmt.Errorf("空指针被使用in empty check")
+		return fmt.Errorf("in empty check")
 	}
 	if n.root.Next == n.root {
 		return fmt.Errorf("empty")
@@ -76,6 +76,10 @@ func (t *Tlist) MoveFront2Back(n *Tlist) {
 // 返回链表头部节点,并删除
 func (t *Tlist) PopFront() *Node {
 	n := t.root.Next
+	if n==t.root {
+		tlog.Common("unusedqueue is empty", "Warning", "timewheel")
+		return nil
+	}
 	t.root.Next = n.Next
 	t.root.Next.Last = t.root
 	return n
@@ -84,6 +88,10 @@ func (t *Tlist) PopFront() *Node {
 // 返回链表尾部节点,并删除
 func (t *Tlist) PopBack() *Node {
 	n := t.root.Last
+	if n==t.root {
+		tlog.Common("unusedqueue is empty", "Warning", "timewheel")
+		return nil
+	}
 	t.root.Last = n.Last
 	t.root.Last.Next = t.root
 	return n

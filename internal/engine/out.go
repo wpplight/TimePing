@@ -21,7 +21,7 @@ func Initial_engine() error {
 		return err
 	}
 	task.InitialTaskPool()
-
+	
 	run_chan = make(chan os.Signal, 1)
 	signal.Notify(run_chan, syscall.SIGINT, syscall.SIGTERM)
 	return nil
@@ -30,5 +30,6 @@ func Initial_engine() error {
 func Run() {
 	tlog.Common("start successfully 启动成功", "engine")
 	<-run_chan
-	tlog.Common("Exit 已停止")
+	tlog.Common("Exit 已停止","engine")
+	tlog.Exit_log()
 }
