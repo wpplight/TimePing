@@ -1,9 +1,8 @@
 package timewheel
 
-import "time"
 
 type chanInfo struct {
-	TaskId   uint16
+	TaskId   int
 	TaskPos  int
 	TaskTime int
 }

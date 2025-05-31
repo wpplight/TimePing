@@ -5,7 +5,6 @@ import (
 	"log"
 	"time"
 	"timeping/internal/config"
-	"timeping/internal/task"
 	"timeping/pkg/tlist"
 )
 var Tw []*list.List
@@ -22,34 +21,39 @@ func ModifyTask() {
 			case gettask:=<-AddTaskChan:
 				//增加任务
 
-				id :=GEtId(UnuseQueue.Front())
+				*GetIdPtr(UnuseQueue.Front())= gettask.TaskId
 
 
 				if Tw[gettask.TaskPos].Front()==nil{
 					Tw[gettask.TaskPos] = list.New()
+					l,_:= tlist.Build(UnuseQueue.PopFront())
 					Tw[gettask.TaskPos].PushBack(&Tasks{
-						tlist.New(),
+						l,
 						gettask.TaskTime,
 					})
 				}
 				for e := Tw[gettask.TaskPos].Front(); ; e = e.Next() {
 					//找到正确位置插入
 					if taskElem, ok := e.Value.(*Tasks); ok {
-
+						//已有轮次，直接插入
 						if taskElem.timeWheels == gettask.TaskTime {
 							taskElem.tl.PushBack(UnuseQueue.PopFront())
+							break
 						}else if taskElem.timeWheels > gettask.TaskTime {
+							l,_:= tlist.Build(UnuseQueue.PopFront())
 							Tw[gettask.TaskPos].InsertBefore(&Tasks{
-								tlist.New(),
+								l,
 								gettask.TaskTime,
-							}
+							},e)
+							break
 						}
 
 					}
 					if e == nil {
 						//如果到达尾部，插入
+						l,_:= tlist.Build(UnuseQueue.PopFront())
 						Tw[gettask.TaskPos].PushBack(&Tasks{
-							tlist.New(),
+							l,
 							gettask.TaskTime,
 						})
 						break
@@ -59,7 +63,33 @@ func ModifyTask() {
 				
 
 			case gettask:=<-DeleteTaskChan:
-				//从任务队列中取出任务
+				//删除任务
+				for e := Tw[gettask.TaskPos].Front(); e != nil; e = e.Next() {
+					if taskElem, ok := e.Value.(*Tasks); ok {
+						//找到正确位置删除
+						if taskElem.timeWheels == gettask.TaskTime {
+							//找到对应的tlist,现在需要遍历寻找
+							for e2 := taskElem.tl.Front(); e2 != nil; e2 = e2.Next {
+								if *GetIdPtr(e2) == gettask.TaskId {
+									//找到对应的节点，删除
+									e2.Move()
+									//将该节点放入未使用队列
+									UnuseQueue.PushBack(e2)
+									//如果tlist为空，则删除该轮次的tasks
+									if taskElem.tl.IsEmpty()==nil {
+										Tw[gettask.TaskPos].Remove(e)
+									}
+									break
+								}
+								if e2.Next==nil {
+									log.Println("未找到对应的任务，可能已经被删除")
+									break
+								}
+							}
+
+						}
+					}
+				}
 				
 		}
 	}

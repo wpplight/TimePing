@@ -23,10 +23,10 @@ func InitialUnuseQueue() {
 }
 
 
-func GetId(node *tlist.Node) int {
-    // 将node指针转换为tasknode指针
+func GetIdPtr(node *tlist.Node) *int {
+    // 将node指针转换为tasknode指针，并返回id字段的指针
     taskPtr := (*tasknode)(unsafe.Pointer(
         uintptr(unsafe.Pointer(node)) - unsafe.Offsetof(tasknode{}.node),
     ))
-    return taskPtr.id
+    return &taskPtr.id
 }
