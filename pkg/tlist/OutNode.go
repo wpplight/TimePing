@@ -8,7 +8,7 @@ func (n *Node) Move(){
 	n.Last.Next=n.Next
 	n.Next.Last=n.Last
 }
-//将节点插在某个几点后面
+//将节点插在某个结点后面
 func (n *Node)Insert(other *Node){
 	if(n== nil){
 		return ;

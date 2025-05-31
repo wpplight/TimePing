@@ -63,6 +63,7 @@ func (t *Tlist) PushFront(n *Node) {
 	t.root.Next.Last = n //更新头部节点的last
 	t.root.Next = n      //更新头部节点
 }
+
 func (t *Tlist) MoveFront2Back(n *Tlist) {
 	t.root.Last.Next = n.root.Next //尾部节点的next指向新插入的节点
 	n.root.Next.Last = t.root.Last //插入节点的last指向尾部节点

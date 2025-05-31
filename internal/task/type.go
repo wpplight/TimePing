@@ -17,7 +17,7 @@ var(
 	UnuseQueue =tlist.New()
 
 	trans struct{
-	TaskId uintptr
-	Used uintptr
+		TaskId uintptr
+		Used uintptr
 	}
 )
