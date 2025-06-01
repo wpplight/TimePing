@@ -2,6 +2,7 @@ package timewheel
 
 import (
 	"container/list"
+	"sync"
 	"time"
 	"timeping/pkg/tlist"
 )
@@ -20,14 +21,16 @@ type tasknode struct{
 type Tasks struct {
 	tl *tlist.Tlist
 	timeWheels int
+	mu sync.Mutex
 }
 type timewheel struct{
 	
 	taskpool []tasknode //内存池
 	Tw [] *list.List//时间轮结构
 	ticker *time.Ticker//计时器
-
+	TwLocks  []sync.Mutex //时间轮锁
 	index uint16//时间轮当前下标
+	wheel int //时间轮当前轮次
 }
 
 var (
