@@ -40,5 +40,4 @@ func delete(t *tlist.Tlist) {
 
 	t.Delete(UnuseQueue)
 	unuseQueueLen++
-	
 }

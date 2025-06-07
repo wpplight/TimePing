@@ -1,24 +1,43 @@
 syntax = "proto3";
 
 package netsend;
-option go_package = "./";
-service MyService {
+option go_package = "./netgrpc";
+service TpService {
+  //登录验证
+  rpc PingPong(Ping) returns(Pong);
   // 双向流：客户端和服务端都可以持续发送消息
-  rpc TaskStream (stream TaskMessage) returns (stream TaskNotification);
+  rpc TaskStream (stream TaskMessage) returns (stream Response);
 }
+
+
 
 message TaskMessage {
   oneof payload {
-    DeleteTaskRequest delete_request = 1;
-    // 其他请求类型可以添加
+    Ping ping =1;
   }
 }
+
+message Ping{
+  int32 uid =1;
+  string nonce=2;
+}
+
+message Response {
+  string message = 1; // 任务完成通知或其他信息
+}
+
+message Pong{
+  string nonce=1;
+  string salt=2;
+  int32 num=3;
+  string noncs =4;
+}
+
 
 message DeleteTaskRequest {
   string task_id = 1;
 }
 
-message TaskNotification {
-  string message = 1; // 任务完成通知或其他信息
-}
-//protoc -I=api --go_out=netcore --go-grpc_out=netcore netcore/*.proto
+
+//export PATH=$PATH:$(go env GOPATH)/bin
+//protoc -I=api/proto/netsend --go_out=api/proto/netsend --go-grpc_out=api/proto/netsend api/proto/netsend/*.proto

@@ -56,6 +56,8 @@ func (t *Tlist) PushBack(n *Node) {
 	t.root.Last.Next = n //尾部节点的next指向新插入的节点
 	t.root.Last = n      //更新尾部节点
 }
+//
+// func (t *Tlist)PushList()
 
 func (t *Tlist) PushFront(n *Node) {
 	n.Last = t.root      //新插入的节点的last指向当前链表头部
@@ -120,4 +122,7 @@ func (t *Tlist) Back() *Node {
 		return nil
 	}
 	return t.root.Last
+}
+func (t *Tlist) End() *Node{
+	return t.root
 }

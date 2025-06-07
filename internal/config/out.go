@@ -13,11 +13,13 @@ func Load_setting() error {
 			return err
 		}
 	}
+	
 	Conf.TaskPoolSize=uint16(viper.GetInt("TaskPoolSize"))
 	Conf.TimeWheelSize=uint16(viper.GetInt("TimeWheelSize"))
 	Conf.Timeinterval=uint16(viper.GetInt("Timeinterval"))
 	Conf.Timelevel=viper.GetInt("Timelevel")
 	Conf.Port=uint16(viper.GetInt("Port"))
+
 	tlog.Common("Setting is OK 配置读取成功","Setting")
 	return nil
 }

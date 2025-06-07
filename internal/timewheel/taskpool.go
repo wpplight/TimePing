@@ -11,7 +11,7 @@ import (
 var unuseQueueLen int //未使用队列长度
 var quemu sync.Mutex //互斥锁
 
-func (tw *timewheel) initialUnuseQueue(taskpool ...[]tasknode) {
+func (tw *timewheel) initialUnuseQueue() {
 	//如果传入了taskpool则使用传入的taskpool，否则使用当前的taskpool
 	spos=unsafe.Offsetof(tasknode{}.node)
 	//将taskpool中的所有节点放入UnuseQueue中

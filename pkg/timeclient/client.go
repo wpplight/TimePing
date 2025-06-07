@@ -1,5 +1,6 @@
 package timeclient
 
-func Default() (*tengine,error){
-
+func Default() (*tengine){
+	return new(tengine)
 }
+
