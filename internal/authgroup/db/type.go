@@ -24,5 +24,5 @@ var(
 	// auth索引用户数量
 	asize uint16
 	// 用户表项
-	usrmmap map[uint16] string
+	usrtable []UsrItem
 )

@@ -33,16 +33,31 @@ func getAuthLen() (uint16,error) {
 	}
 	_,err:=auth.Seek(0,0)
 	if err!=nil{
-		tlog.Log_all("auth file seek fail","Error","auth")
+		tlog.Common("auth file seek fail","Error","auth")
 		tlog.Err_in("auth file seek fail"+err.Error(),"Error","auth")
 		return 0,errors.New("auth file seek fail")
 	}
 	b:=make([]byte,2)
 	_,err=auth.Read(b)
 	if err!=nil{
-		tlog.Log_all("auth file read fail","Error","auth")
+		tlog.Common("auth file read fail","Error","auth")
 		tlog.Err_in("auth file read fail"+err.Error(),"Error","auth")
 		return 0,errors.New("auth file read fail")
 	}
 	return byteToUint16(b),nil
+}
+
+//将用户表单载入到内存中
+func loadUsr() error{ 
+	if usrtable==nil{
+		tlog.Log_all("usr table is nil","Error","auth")
+		return errors.New("usr table is nil")
+	}
+	if asize==0{
+		tlog.Log_all("auth size is zero","Error","auth")
+		return errors.New("auth size is zero")
+	}
+	for i:=0;i<int(asize);i++{
+		
+	}
 }

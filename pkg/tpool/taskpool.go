@@ -20,7 +20,7 @@ func create_unuesdtable() {
 	//初始化
 	unusedpool.data=tlist.New()
 
-	unusedpool.LenD=uint32(len(dupool[0]))
+	unusedpool.LenD=uint32(len(dupool[0]))1
 
 	for i:=0;i<85;i++ {
 		unusedpool.data.PushBack(&dupool[0][i].Tnode)

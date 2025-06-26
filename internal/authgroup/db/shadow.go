@@ -1,7 +1,6 @@
 package db
 
 import (
-	"encoding/binary"
 	"errors"
 	"os"
 	"timeping/internal/tlog"
@@ -22,7 +21,7 @@ func createShadow() error{
 }
 
 //核验密码账户一致性
-func passCheck() error {
+func firstCheck() error {
 	//安全性检测
 	if shadow==nil{
 		tlog.Log_all("shadow file is nil","Error","auth")
@@ -66,10 +65,7 @@ func passCheck() error {
 		tlog.Log_all("auth file get length error","Error","authdb")
 		return err
 	}
-	usrmmap=make(map[uint16]string,max(asize+20,50))
+	usrtable:=make([]UsrItem,max(80,asize+40))
 	
-
 	
-
-
 }
