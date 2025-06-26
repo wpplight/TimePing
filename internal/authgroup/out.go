@@ -1,23 +1,22 @@
 package authgroup
 
 import (
-	
+	"timeping/internal/authgroup/db"
 )
 
-func Init() error {
+func Init(Fpath string)  error {
+	var err error
 	//用户组缓存载入
-	if err:=init_authdb();err!=nil{
+	if err=db.Init_authdb(Fpath);err!=nil{
 		return err
 	}
-	
+	initusr()
 
 	return nil
 }
 
-func Kill() error {
+func Kill()  {
 	//用户组缓存释放
-	if err:=kill_authdb();err!=nil{
-		return err
-	}
-	return nil
+	db.Release()
+
 }

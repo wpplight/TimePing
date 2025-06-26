@@ -6,6 +6,7 @@ type cnf struct{
 	TimeWheelSize uint16//时间轮的大小
 	Port  uint16//使用端口
 	Timelevel int
+	Authdb string
 };
 
 var (

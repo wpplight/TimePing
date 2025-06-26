@@ -11,6 +11,11 @@ var(
 	logfile *os.File
 )
 
+func Log_all(message string, tag ...string){
+	Common(message,tag...)
+	Err_in(message,tag...)
+}
+
 func Init_log() error{
 	if !ostools.FileExists("./timeping.log"){
 		if err:=ostools.CreateFile("./timeping.log");err!=nil{

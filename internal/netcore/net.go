@@ -34,6 +34,6 @@ func(n *NetCore) Run() error {
 		return err
 	}
 
-
+	return nil
 }
 

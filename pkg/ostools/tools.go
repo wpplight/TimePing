@@ -2,15 +2,13 @@ package ostools
 import (
     "os"
 )
+
+// 判断文件是否可以打开,可以则返回true
 func FileExists(path string) bool {
     if _, err := os.Stat(path); err == nil {
         return true  // 文件存在
-    } else if os.IsNotExist(err) {
-        return false // 文件不存在
-    } else {
-        // 其他错误（权限、IO 错误等），根据需要自行处理
-        return false
-    }
+    } 
+    return false
 }
 
 func OpenFile(path string) (*os.File, error) {

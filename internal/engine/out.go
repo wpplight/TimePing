@@ -5,7 +5,6 @@ import (
 	"os/signal"
 	"syscall"
 	"timeping/internal/config"
-	"timeping/internal/task"
 	"timeping/internal/tlog"
 )
 
@@ -14,13 +13,14 @@ var (
 )
 
 func Initial_engine() error {
+	//初始化日志,后面模块报错都会用到日志
 	if err := tlog.Init_log(); err != nil {
 		return err
 	}
+	//初始化config模块，读取参数，后面模块都需要参数进行参考
 	if err := config.Load_setting(); err != nil {
 		return err
 	}
-	task.InitialTaskPool()
 	
 	run_chan = make(chan os.Signal, 1)
 	signal.Notify(run_chan, syscall.SIGINT, syscall.SIGTERM)

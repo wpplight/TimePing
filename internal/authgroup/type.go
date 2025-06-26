@@ -1,6 +1,8 @@
 package authgroup
 
-import "os"
+import (
+	"timeping/internal/authgroup/jumptable"
+)
 
 
 
@@ -10,7 +12,9 @@ var(
 	ag struct{
 		maxid uint16
 		AuthNum int 
+		Uidtable *jumptable.JumpTable
 	}
 	//总的用户管理文件
-	auall *os.File
+	
+
 )

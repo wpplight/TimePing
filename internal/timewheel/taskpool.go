@@ -34,7 +34,7 @@ func GetIdPtr(node *tlist.Node) *int {
 func (tw *timewheel)expandTaskPool() {
 	//扩容任务池
 	newpool := make([]tasknode, len(NewTimeWheel().taskpool)/4+1)
-	tw.initialUnuseQueue(newpool) //重新初始化未使用队列
+	tw.initialUnuseQueue() //重新初始化未使用队列
 	NewTimeWheel().taskpool = append(tw.taskpool, newpool...)
 	
 }
