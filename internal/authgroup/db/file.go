@@ -41,11 +41,15 @@ func Init_authdb(Fpath string) (error) {
 	if err!=nil{
 		tlog.Common("持久化文件错误"+err.Error(),"Warning","auth")
 		tlog.Err_in("缺少持久化文件，如果不是初次启动请校验数据完整性"+err.Error(),"Warning","auth")	
-		return nil
+		return err
+	}
+	err=syncCheck()
+	if err!=nil{
+		tlog.Common("持久化文件错误"+err.Error(),"Warning","auth")
+		tlog.Err_in("持久化文件错误"+err.Error(),"Warning","auth")
+		return err
 	}
 
-	
-	
     return nil
 }
 

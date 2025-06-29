@@ -1,4 +1,4 @@
-package jumptable
+package upool
 
 import (
 	"timeping/pkg/tlist"
@@ -22,49 +22,49 @@ func NodeToIndex(n *tlist.Node) *IndexNode{
 }
 
 // setIndexBegin 设置 IndexNode 的索引值
-func setIndexBegin(n *tlist.Node,begin uint32){
+func SetIndexBegin(n *tlist.Node,begin uint32){
 	k:=NodeToIndex(n)
 	k.Begin = begin
 }
 
 // setDataBegin 设置 DataNode 的开始值
-func setDataBegin(n *tlist.Node,begin uint32){
+func SetDataBegin(n *tlist.Node,begin uint32){
 	k:=NodeToDataNode(n)
 	k.Begin = begin
 }
 
 // setDataEnd 设置 DataNode 的结束值
-func setDataEnd(n *tlist.Node,end uint32){
+func SetDataEnd(n *tlist.Node,end uint32){
 	k:=NodeToDataNode(n)
 	k.End = end
 }
 
 // setIndexto 设置 IndexNode 的指向节点
-func setIndexto(n *tlist.Node,to *tlist.Node){
+func SetIndexto(n *tlist.Node,to *tlist.Node){
 	k:=NodeToIndex(n)
 	k.To = to
 }
 
 // getIndexEnd 获取 IndexNode 的结束值
-func getIndexBegin(n *tlist.Node) uint32{
+func GetIndexBegin(n *tlist.Node) uint32{
 	k:=NodeToIndex(n)
 	return k.Begin
 }
 
 // getDataBegin 获取 DataNode 的开始值
-func getDataBegin(n *tlist.Node) uint32{
+func GetDataBegin(n *tlist.Node) uint32{
 	k:=NodeToDataNode(n)
 	return k.Begin
 }
 
 // getDataEnd 获取 DataNode 的结束值
-func getDataEnd(n *tlist.Node) uint32{
+func GetDataEnd(n *tlist.Node) uint32{
 	k:=NodeToDataNode(n)
 	return k.End
 }
 
 // getIndexto 获取 IndexNode 的指向节点
-func getIndexto(n *tlist.Node) *tlist.Node{
+func GetIndexto(n *tlist.Node) *tlist.Node{
 	k:=NodeToIndex(n)
 	return k.To
 }

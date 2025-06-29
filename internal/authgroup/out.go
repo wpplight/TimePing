@@ -11,7 +11,6 @@ func Init(Fpath string)  error {
 		return err
 	}
 	initusr()
-
 	return nil
 }
 
@@ -19,4 +18,8 @@ func Kill()  {
 	//用户组缓存释放
 	db.Release()
 
+}
+
+func Run(){
+	
 }

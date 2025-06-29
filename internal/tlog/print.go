@@ -4,7 +4,7 @@ import "log"
 func Common(message string, tag ...string){
 	s:=""
 	for _,v:=range tag{
-		s+="["+v+"]  "
+		s+="["+v+"]"
 	}
 	log.Println(s+message)
 }

@@ -3,6 +3,7 @@ package jumptable
 import (
 	"math/rand"
 	"timeping/pkg/tlist"
+	"timeping/pkg/upool"
 )
 
 // okinsert 根据50%概率决定是否执行插入操作
@@ -68,7 +69,7 @@ func (l *Index) checkIndex(i uint32, node *tlist.Node) *tlist.Node {
 
 	list := l.index
 	for n := node; n.Last != list.End(); n = n.Last {
-		t := getIndexBegin(n.Last)
+		t := upool.GetIndexBegin(n.Last)
 		if t>i {
 			return n
 		}
@@ -84,8 +85,8 @@ func (l *Index) checkIndex(i uint32, node *tlist.Node) *tlist.Node {
 func (i *Index) insertFrontIndex(num uint32, to *tlist.Node, where *tlist.Node) {
 	n := unusedpool.PopIndex()
 	i.length++
-	setIndexBegin(n, num)
-	setIndexto(n, to)
+	upool.SetIndexBegin(n, num)
+	upool.SetIndexto(n, to)
 	where.InsertFront(n)
 }
 
@@ -97,8 +98,8 @@ func (i *Index) insertFrontIndex(num uint32, to *tlist.Node, where *tlist.Node) 
 func (i *Index) insertBackIndex(num uint32, to *tlist.Node, where *tlist.Node) *tlist.Node {
 	n := unusedpool.PopIndex()
 	i.length++
-	setIndexBegin(n, num)
-	setIndexto(n, to)
+	upool.SetIndexBegin(n, num)
+	upool.SetIndexto(n, to)
 	where.InsertBack(n)
 	return n
 }
@@ -108,7 +109,7 @@ func (i *Index) insertBackIndex(num uint32, to *tlist.Node, where *tlist.Node) *
 // num: 要插入的索引值
 // where: 插入位置参考节点指针
 func (i *Index) fastInsert(num uint32, where *tlist.Node) {
-	other := getIndexBegin(where)
+	other := upool.GetIndexBegin(where)
 	if other > num {
 		i.insertFrontIndex(num, where.Last, where)
 	} else {
@@ -129,16 +130,16 @@ func (jt *JumpTable)checkLevel() {
 	l:=jt.indexlist[len(jt.indexlist)-1]
 	p:=Index{0,tlist.New()}
 	node:=unusedpool.PopIndex()
-	setIndexBegin(node,getIndexBegin(l.front()))
-	setIndexto(node,l.front())
+	upool.SetIndexBegin(node,upool.GetIndexBegin(l.front()))
+	upool.SetIndexto(node,l.front())
 	p.pushBack(node)
 	for n:=l.front().Next;n!=l.end();n=n.Next{
 		if okinsert(){
 			continue
 		}
 		temp:=unusedpool.PopIndex()
-		no:=NodeToIndex(temp) 
-		no.Begin=getIndexBegin(n)
+		no:=upool.NodeToIndex(temp) 
+		no.Begin=upool.GetIndexBegin(n)
 		no.To=n
 		p.pushBack(temp)
 	}

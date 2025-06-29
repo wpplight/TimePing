@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"os"
 	"timeping/internal/tlog"
 	"timeping/pkg/ostools"
 )
@@ -55,13 +56,12 @@ func byteToUint16(b []byte) uint16 {
 	return uint16(b[0])<<8 | uint16(b[1])
 }
 
-func byteToUsrItem(b []byte) *UsrItem{ 
-	l:=uint8(b[2] & 0x7F)
-	return &UsrItem{
-		Id:byteToUint16(b[0:2]),
-		Used: b[2]>>7,
-		Page: byteToUint16(b[3:5]),
-		Set: uint8(b[5]),
+func byteToUsrItem(b []byte) UsrItem{ 
+	l:=uint8(b[0] & 0x7F)
+	return UsrItem{
+		Used: b[0]>>7 == 1,
+		Page: uint8(b[1]),
+		Set: uint16(byteToUint16(b[3:5])),
 		Name: string(b[6:6+l]),
 	}
 }
@@ -75,21 +75,45 @@ func usrItemToByte(usr *UsrItem) ([]byte,error){
 		return nil,errors.New("usr is nil")
 	}
 	
-	// id
-	ans[0]=byte(usr.Id>>8)
-	ans[1]=byte(usr.Id)
 	// 使用状况
-	u:=usr.Used
-	ans[2]=byte(u)
+	if usr.Used{
+		ans[0]=1<<7|byte(len(usr.Name))
+	}else{
+		ans[0]=0|byte(len(usr.Name))
+	}
+	
 	//页号
-	ans[3]=byte(usr.Page>>8)
-	ans[4]=byte(usr.Set)
+	ans[1]=byte(usr.Page)
 	//页内偏移
-	ans[5]=byte(usr.Set)
+	ans[2]=byte(usr.Set>>8)
+	ans[3]=byte(usr.Set)
 	//用户名
 	 l:=len(usr.Name)
 	 for i:=0;i<l;i++{
-		 ans[i+6]=usr.Name[i]
+		 ans[i+4]=usr.Name[i]
 	 }
 	 return ans,nil	
+}
+
+// 将文件中指定大小的数据读入块中
+func loadBlock(file *os.File,offset int64,blk []byte) error {
+
+	if _,err:=file.Seek(int64(offset),0);err!=nil{
+		return err
+	}
+	if _,err:=file.Read(blk);err!=nil{
+		return err
+	}
+	return nil
+}
+
+// 将块写入文件
+func writeBlock(file *os.File,offset int64,blk []byte) error { 
+	if _,err:=file.Seek(int64(offset),0);err!=nil{
+		return err
+	}
+	if _,err:=file.Write(blk);err!=nil{
+		return err
+	}
+	return nil
 }

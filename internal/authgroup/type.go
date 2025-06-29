@@ -1,8 +1,6 @@
 package authgroup
 
-import (
-	"timeping/internal/authgroup/jumptable"
-)
+import "timeping/pkg/jumptable"
 
 
 

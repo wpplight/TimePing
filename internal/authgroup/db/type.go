@@ -6,11 +6,10 @@ import "os"
 
 // 用户表项 16B 2^7项
 type UsrItem struct {
-	Id   uint16 //2B 用户编号
-	Used uint8 //1B 使用状态
-	Page uint16 //2B 页码
-	Set  uint8 //1B 页内偏移
-	Name string // 10B 用户名，长度11
+	Used bool //1B 使用状态
+	Page uint8 //1B 页码
+	Set  uint16 //2B 页内偏移
+	Name string // 12B 用户名，长度12
 }
 
 var(
@@ -25,4 +24,5 @@ var(
 	asize uint16
 	// 用户表项
 	usrtable []UsrItem
+	logintable map[string] uint16
 )

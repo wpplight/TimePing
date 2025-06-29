@@ -1,25 +1,28 @@
 package jumptable
 
-import "timeping/pkg/tlist"
+import (
+	"timeping/pkg/tlist"
+	"timeping/pkg/upool"
+)
 
 //从跳表中取出元素
 func (jt *JumpTable)Pop() uint32 {
 	n:= jt.frontData()
-	begin:=getDataBegin(n)
-	end:=getDataEnd(n)
+	begin:=upool.GetDataBegin(n)
+	end:=upool.GetDataEnd(n)
 	if begin==end {
 		jt.popData()
-		unusedpool.pushDate(n)
+		unusedpool.PushDate(n)
 		for i:=0;i<len(jt.indexlist);i++{
 			m:=jt.popIndex(i)
-			unusedpool.pushIndex(m)
+			unusedpool.PushIndex(m)
 		}
 		return begin
 	}
-	setDataBegin(n,begin+1)
+	upool.SetDataBegin(n,begin+1)
 	for _,n:=range jt.indexlist{
 		k:=n.front()
-		setIndexBegin(k,begin+1)
+		upool.SetIndexBegin(k,begin+1)
 	}
 
 	return begin
@@ -37,23 +40,23 @@ func (jt *JumpTable)Insert(n uint32)  {
 	for i:=l-1;i>=0;i--{
 		node=jt.indexlist[i].checkIndex(n,node)
 		stack=append(stack,node)
-		node=getIndexto(node)
+		node=upool.GetIndexto(node)
 	}
 
 	//数据层移动
 	w:=jt.fastCheckData(n,node)
 
 	//后侧合并检测
-	end:=getDataEnd(w)
+	end:=upool.GetDataEnd(w)
 	if end+1==n{
-		setDataEnd(w,n)
+		upool.SetDataEnd(w,n)
 		//尾部直接返回
 		p:=jt.getDataEnd()
 		if w.Last==p{
 			return 
 		}
 		//需要合并
-		if getDataBegin(w.Last)==n+1{
+		if upool.GetDataBegin(w.Last)==n+1{
 			jt.mergenode(w,stack)
 		}
 		return 

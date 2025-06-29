@@ -2,14 +2,14 @@ package jumptable
 
 import (
 	"timeping/pkg/tlist"
-	"unsafe"
+	"timeping/pkg/upool"
 )
 
 
 func (dl *DataList)init(begin uint32,end uint32){
 	dl.Data=tlist.New();
 	n:=unusedpool.PopData()
-	k:=NodeToDataNode(n)
+	k:=upool.NodeToDataNode(n)
 	k.Reset(begin,end)
 	dl.Data.PushBack(n)
 	dl.length=1
@@ -27,13 +27,11 @@ func (j *JumpTable)init(begin uint32,end uint32){
 	
 }
 
-func New(begin uint32,end uint32) (*JumpTable){
+func New(begin uint32,end uint32,unusepool *upool.Unused) (*JumpTable){
 
 	j:=new(JumpTable)
-	init_upool()
-	
-	dn=unsafe.Offsetof(DataNode{}.Tnode)
-	in=unsafe.Offsetof(IndexNode{}.Tnode)
+
+	unusedpool=unusepool
 
 	j.init(begin,end)
 

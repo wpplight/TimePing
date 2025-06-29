@@ -1,8 +1,7 @@
 package tlist
 
 import (
-	"fmt"
-	"timeping/internal/tlog"
+	"errors"
 )
 
 // Tlist 是一个侵入式双向循环链表结构
@@ -26,9 +25,7 @@ func (t *Tlist) init() *Tlist {
 // 常用于复用已有节点重建链表
 func Build(n *Node) (*Tlist, error) {
 	if n == nil {
-		tlog.Common("Tlist build error nil", "tlist")
-		tlog.Err_in("Tlist build, pointer is nil", "tlist")
-		return nil, fmt.Errorf("Tlist init error")
+		return nil, errors.New("Tlist init error")
 	}
 	k := new(Tlist)
 	
@@ -42,12 +39,10 @@ func Build(n *Node) (*Tlist, error) {
 // 如果链表为空返回error("empty")
 func (n *Tlist) IsEmpty() error {
 	if n == nil {
-		tlog.Common("空指针被使用in empty check", "tlist")
-		tlog.Err_in("空指针被使用in empty check", "tlist")
-		return fmt.Errorf("in empty check")
+		return errors.New("in empty check")
 	}
 	if n.root.Next == n.root {
-		return fmt.Errorf("empty")
+		return errors.New("empty")
 	}
 	return nil
 }
@@ -128,7 +123,6 @@ func (t *Tlist) MoveFront2Back(n *Tlist) {
 func (t *Tlist) PopFront() *Node {
 	n := t.root.Next
 	if n==t.root {
-		tlog.Common("unusedqueue is empty", "Warning", "timewheel")
 		return nil
 	}
 	t.root.Next = n.Next
@@ -141,7 +135,6 @@ func (t *Tlist) PopFront() *Node {
 func (t *Tlist) PopBack() *Node {
 	n := t.root.Last
 	if n==t.root {
-		tlog.Common("unusedqueue is empty", "Warning", "timewheel")
 		return nil
 	}
 	t.root.Last = n.Last
@@ -155,9 +148,7 @@ func (t *Tlist) PopBack() *Node {
 // 对于new方式创建的链表会直接释放
 func (t *Tlist) Delete(l *Tlist) error {
 	if t.root.Next != t.root {
-		tlog.Common("delete fail not empty", "tlist")
-		tlog.Err_in("delete fail not empty", "tlist")
-		return fmt.Errorf("not empty")
+		return errors.New("not empty")
 	}
 	l.PushBack(t.root)
 	t.root=nil

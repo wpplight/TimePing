@@ -6,6 +6,7 @@ import (
 	"syscall"
 	"timeping/internal/config"
 	"timeping/internal/tlog"
+	"timeping/pkg/bufferpool"
 )
 
 var (
@@ -21,6 +22,8 @@ func Initial_engine() error {
 	if err := config.Load_setting(); err != nil {
 		return err
 	}
+	//初始化bufferpool模块
+	bufferpool.Buffer.Init()
 	
 	run_chan = make(chan os.Signal, 1)
 	signal.Notify(run_chan, syscall.SIGINT, syscall.SIGTERM)
